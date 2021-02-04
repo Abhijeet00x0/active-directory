@@ -1,0 +1,51 @@
+creating ou and groups:
+
+#importing active directory module here
+
+Import-Module ActiveDirectory
+
+#Accessing file 
+
+$csvfile = Import-Csv "C:\Users\Administrator\Documents\final-2.csv"
+
+# using foreach loop now to list different ou values
+
+ ForEach($i in $csvfile) {  # "output ou: $($_.OU)"
+                           #" ` " 
+                          # "Output Group:$($i.Group)"
+                           
+                            " ` "
+                           # "output Users: $($_.'First Name') $($_.'Last Name')"
+
+                           # " ` "
+# creating ou 
+                       # New-ADOrganizationalUnit -Name $_.OU
+
+#Creating group           
+              #        New-ADGroup `
+               #         -Name "$($i.Group)" `
+               #         -SamAccountName "$($i.Group)" `
+                #        -GroupCategory 'Security '`
+                 #       -GroupScope 'Global' `
+                  #      -DisplayName "$($i.Group)" `
+                   #     -Description "$($i.Group)" `
+                    #    -Path "$($i.'path')"
+ # we will create and add user acc. here
+      Write-Host "Creating User $($i.FirstName)"
+   New-ADUser -Name "$($i.'First Name') $($i.'Last Name')" `
+               -GivenName "$i.'First Name'" `
+               -UserPrincipalName "$($i.'First Name')$($i.'Last Name')"  `
+               -SamAccountName "$($i.'First Name')$($i.'Last Name')" `
+               -Description "$($i.Description)" `
+               -Path "$($i.'grp_addr')" `
+               
+             #   -Path ""              
+    
+                    
+
+
+
+                    
+}
+
+#Write-Host "Output is here '$_.ou'"
