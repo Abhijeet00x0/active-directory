@@ -1,0 +1,27 @@
+.Adding user to groups:
+
+Import-Module ActiveDirectory
+
+$file = Import-Csv "C:\Users\Administrator\Documents\for_userso.csv"
+
+foreach($i in $file) {
+
+    $usr= $i.Users
+     
+       if(Get-ADGroup  -F   {SamAccountName -eq $usr}) {
+         
+
+       Write-Host " Users $i.Users already exist in the Group!!!"
+       }
+       else{ 
+            foreach($x in $i.Groups.split(',').Trim()){
+            Add-ADGroupMember -Identity $x -Members $usr
+            Write-Host "$usr added to the Group $x"
+
+            }
+       
+             
+           }
+              
+           }
+       
